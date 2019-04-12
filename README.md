@@ -3,9 +3,19 @@
 A Clojure library designed to read a stream of changes from the
 npm registry.
 
-## Usage
+## Install
 
-Dependency: `[npm-registry-follow 0.1.0]`
+#### Leiningen/Boot
+```
+[npm-registry-follow "1.0.0"]
+```
+
+#### Clojure CLI/deps.edn
+```
+npm-registry-follow {:mvn/version "1.0.0"}
+```
+
+## Usage
 
 ```clojure
 user=> (def stop (npm-registry-follow.core/listen-for-changes #(println %)))
