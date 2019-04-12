@@ -1,5 +1,7 @@
 # npm-registry-follow
 
+[![Clojars Project](https://img.shields.io/clojars/v/open-services/npm-registry-follow.svg)](https://clojars.org/open-services/npm-registry-follow)
+
 A Clojure library designed to read a stream of changes from the
 npm registry.
 
@@ -7,12 +9,12 @@ npm registry.
 
 #### Leiningen/Boot
 ```
-[npm-registry-follow "1.0.0"]
+[open-services/npm-registry-follow "1.0.0"]
 ```
 
 #### Clojure CLI/deps.edn
 ```
-npm-registry-follow {:mvn/version "1.0.0"}
+open-services/npm-registry-follow {:mvn/version "1.0.0"}
 ```
 
 ## Usage
