@@ -15,5 +15,9 @@
     (future
       (with-open [rdr (clojure.java.io/reader res)]
         (doseq [line (line-seq rdr)]
-          (callback (:id (json/read-json line true))))))
+          (if (= line "")
+            (do
+              (.close res)
+              (listen-for-changes callback))
+            (callback (:id (json/read-json line true)))))))
     (fn [] (future (.close res)))))
