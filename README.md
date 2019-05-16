@@ -32,6 +32,17 @@ user=> (stop)
 ;; Alternative to wait for stream to properly close
 user=> @(stop)
 
+;; Or, using polling
+user=> (def interval (* 1000 3)) ;; three seconds
+#'user/interval
+user=> (def stop (npm-registry-follow.core/poll-for-changes interval #(println %)))
+#'user/stop
+"chung-rn"
+"flycomponents"
+"react"
+...
+user=> (stop)
+;; No longer doing any polling
 ```
 
 ## License
