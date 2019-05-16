@@ -9,12 +9,12 @@ npm registry.
 
 #### Leiningen/Boot
 ```
-[open-services/npm-registry-follow "1.0.0"]
+[open-services/npm-registry-follow "1.1.0"]
 ```
 
 #### Clojure CLI/deps.edn
 ```
-open-services/npm-registry-follow {:mvn/version "1.0.0"}
+open-services/npm-registry-follow {:mvn/version "1.1.0"}
 ```
 
 ## Usage

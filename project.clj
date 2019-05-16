@@ -1,4 +1,4 @@
-(defproject open-services/npm-registry-follow "1.0.1"
+(defproject open-services/npm-registry-follow "1.1.0"
   :description "Returns change feed for the npm registry"
   :url "https://github.com/open-services/npm-registry-follow"
   :license {:name "MIT"
