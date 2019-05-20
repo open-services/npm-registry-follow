@@ -57,7 +57,8 @@
                  (doseq [item (:results res)]
                    (callback (:id item)))
                  (reset! last-seq (:last_seq res))
-                 (Thread/sleep polling-interval)))))))
+                 ))
+             (Thread/sleep polling-interval)))))
      (fn [] (reset! poll? false)))))
 
 (comment
