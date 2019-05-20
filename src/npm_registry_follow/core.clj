@@ -2,11 +2,11 @@
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]))
 
-(def registry-url "https://replicate.npmjs.com/registry")
+(def ^:dynamic *registry-url* "https://replicate.npmjs.com/registry")
 
-(def stream-url (format "%s/_changes?include_docs=false&since=now&feed=continuous" registry-url))
-(def poll-url #(format "%s/_changes?since=%s" registry-url %))
-(def last-seq-url (format "%s/_changes?since=now" registry-url))
+(def stream-url (format "%s/_changes?include_docs=false&since=now&feed=continuous" *registry-url*))
+(def poll-url #(format "%s/_changes?since=%s" *registry-url* %))
+(def last-seq-url (format "%s/_changes?since=now" *registry-url*))
 
 ;; read changes from the npm registry
 ;; calls `callback` for each change, with a string of the module name
@@ -25,7 +25,11 @@
     (fn [] (future (.close res)))))
 
 (defn get-changes-since [last-seq]
-  (json/read-json (slurp (poll-url last-seq))))
+  (try
+    (json/read-json (slurp (poll-url last-seq)))
+    (catch Exception e
+      {:error? true
+       :exception e})))
 
 (defn get-last-seq []
   (:last_seq (json/read-json (slurp last-seq-url))))
@@ -47,10 +51,13 @@
        (let [last-seq (atom (get-last-seq)) ]
          (while @poll?
            (let [res (get-changes-since @last-seq)]
-             (doseq [item (:results res)]
-               (callback (:id item)))
-             (reset! last-seq (:last_seq res))
-             (Thread/sleep polling-interval)))))
+             (if (:error? res)
+               (callback res)
+               (do
+                 (doseq [item (:results res)]
+                   (callback (:id item)))
+                 (reset! last-seq (:last_seq res))
+                 (Thread/sleep polling-interval)))))))
      (fn [] (reset! poll? false)))))
 
 (comment

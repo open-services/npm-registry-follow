@@ -43,6 +43,13 @@ user=> (def stop (npm-registry-follow.core/poll-for-changes interval #(println %
 ...
 user=> (stop)
 ;; No longer doing any polling
+
+;; If there is a exception when fetching updates, a map with `:error? true` and
+;; `:exception` set to the exception that happened.
+;; Make sure to check for this in your code, as otherwise silent errors can happen
+
+;; If you want to follow a different registry than `replicate.npmjs.com`, you
+;; can rebind `*registry-url*` with `binding`
 ```
 
 ## License
